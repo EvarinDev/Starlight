@@ -24,7 +24,7 @@
   - [Installing](#installing)
 - [⛏️ Built Using ](#️-built-using-)
 - [✍️ Authors ](#️-authors-)
-- [Ads](#ads)
+- [💖Ads](#ads)
 
 ## 🧐 About <a name = "about"></a>
 This bot is inspired by [Asta](https://discord.com/application-directory/1259476682730111097), but it doesn't include the full source code of Asta. Below is a basic implementation of a Discord bot using **Seyfert** and **TypeScript** that can handle messages and commands efficiently.
@@ -67,5 +67,6 @@ Rename .env.example to .env and Setup Config
 - [@EvarinDev](https://github.com/EvarinDev) - Idea & Initial work
 See also the list of [contributors](https://github.com/EvarinDev/Starlight/contributors) who participated in this project.
 
-## Ads
+## 💖Ads
+Rinthong Server: https://discord.gg/rinthong
 <img src="https://cdn.faystarnext.studio/RinthongAds.png" />
