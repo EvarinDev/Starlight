@@ -35,22 +35,6 @@ const config: { [key: string]: IConfig } = {
 };
 export default config[process.env.NODE_ENV || "development"] as IConfig;
 
-declare global {
-	namespace NodeJS {
-		interface Process {
-			noDeprecation: boolean;
-		}
-		interface ProcessEnv {
-			NODE_ENV: "development" | "production";
-			PRODUCTION_TOKEN: string;
-			PRODUCTION_REDIS: string;
-			
-			DEVELOPMENT_TOKEN: string;
-			DEVELOPMENT_REDIS: string;
-		}
-	}
-}
-
 interface IConfig {
 	Lavalink: NodeOptions[];
 	REDIS?: string;
