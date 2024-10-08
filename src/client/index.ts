@@ -14,10 +14,3 @@ process.on("unhandledRejection", async (reason, promise) => {
 process.on("uncaughtException", (err) => {
 	client.logger.error(`Uncaught Exception: ${err.message}`);
 });
-declare global {
-	namespace NodeJS {
-		interface ProcessEnv {
-			TOKEN: string;
-		}
-	}
-}

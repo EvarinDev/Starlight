@@ -25,7 +25,7 @@ export default createEvent({
 					status: PresenceUpdateStatus.Online,
 					activities: [
 						{
-							name: `Starlight Model Meteor | ${guilds} Guilds | ${users()} Users | ${players} Players`,
+							name: `Starlight| ${guilds} Guilds | ${users()} Users | ${players} Players`,
 							type: ActivityType.Watching,
 						},
 					],

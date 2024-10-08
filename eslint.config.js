@@ -4,7 +4,7 @@ const tseslint = require("typescript-eslint");
 
 module.exports = [
   pluginJs.configs.recommended,
-  // ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.recommendedTypeChecked,
   {
     files: ["**/*.{js,mjs,cjs,ts,tsx}"],
     ignores: ["**/node_modules/**", "**/dist/**", "**/build/**"],
