@@ -4,6 +4,7 @@
   "main": "dist/cluster.js",
   "version": "1.0.0",
   "author": "EvarinDev",
+  "license": "MIT",
   "scripts": {
     "full-install": "bun i && bun x prisma generate",
     "start": "bun x tsc && NODE_ENV=production bun dist/cluster.js",
