@@ -1,0 +1,17 @@
+import { ErrorRequest } from "@/client/structures/utils/Client";
+import { Declare, Command, type CommandContext } from "seyfert";
+
+@Declare({
+	name: "setup-music",
+	description: "[EN]: Setup Music Channel | [TH]: ตั้งค่าช่องเพลง",
+	contexts: ["Guild"],
+})
+export default class SetupCommand extends Command {
+	async run(ctx: CommandContext) {
+		try {
+			return await ctx.client.services.execute("SetupCommand", ctx);
+		} catch (error) {
+			return ErrorRequest(ctx, error);
+		}
+	}
+}

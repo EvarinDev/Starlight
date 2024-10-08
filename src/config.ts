@@ -1,0 +1,59 @@
+import { NodeOptions } from "sakulink";
+import "dotenv/config";
+
+const config: { [key: string]: IConfig } = {
+	development: {
+		TOKEN: process.env.DISCORD_TOKEN,
+		REDIS: process.env.DEVELOPMENT_REDIS,
+		Lavalink: [
+			{
+				identifier: "Jirayu.net[0] [recommend]",
+				host: "lavalink.jirayu.net",
+				password: "youshallnotpass",
+				port: 13592,
+				playback: true,
+				search: true,
+				version: "v4",
+			},
+		],
+	},
+	production: {
+		TOKEN: process.env.PRODUCTION_TOKEN,
+		REDIS: process.env.PRODUCTION_REDIS,
+		Lavalink: [
+			{
+				identifier: "Jirayu.net[1]",
+				host: "lavalink.jirayu.net",
+				password: "youshallnotpass",
+				port: 13592,
+				playback: false,
+				search: false,
+				version: "v4",
+			},
+		],
+	},
+};
+export default config[process.env.NODE_ENV || "development"] as IConfig;
+
+declare global {
+	namespace NodeJS {
+		interface Process {
+			noDeprecation: boolean;
+		}
+		interface ProcessEnv {
+			NODE_ENV: "development" | "production";
+			PRODUCTION_TOKEN: string;
+			PRODUCTION_REDIS: string;
+			
+			DEVELOPMENT_TOKEN: string;
+			DEVELOPMENT_REDIS: string;
+		}
+	}
+}
+
+interface IConfig {
+	Lavalink: NodeOptions[];
+	REDIS?: string;
+	DSA?: string;
+	TOKEN: string;
+}

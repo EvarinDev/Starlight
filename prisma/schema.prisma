@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model guild {
+  uuid   String @id @default(auto()) @map("_id") @db.ObjectId
+  id     String
+  name   String
+  client_id String
+  room   Room   @relation(fields: [roomid], references: [uuid])
+  ai     AI    @relation(fields: [aiid], references: [uuid])
+  aiid   String @db.ObjectId
+  roomid String @db.ObjectId
+  lang   Lang
+}
+
+model Room {
+  uuid  String  @id @default(auto()) @map("_id") @db.ObjectId
+  id    String @default("")
+  message String @default("")
+  client_id String
+  guild guild[]
+}
+
+model AI {
+  uuid String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  client_id String
+  guild guild[]
+  channel String
+}
+
+model Client {
+  uuid String @id @default(auto()) @map("_id") @db.ObjectId
+  id   String
+  token String
+}
+
+// model Analytics {
+//   uuid String @id @default(auto()) @map("_id") @db.ObjectId
+// }
+
+// model AnalyticGuild {
+//   uuid String @id @default(auto()) @map("_id") @db.ObjectId
+//   id   String
+//   name String
+// }
+
+// model AnalyticUser {
+//   uuid String @id @default(auto()) @map("_id") @db.ObjectId
+//   id   String
+//   name String
+// }
+
+enum Lang {
+  en
+  th
+  en_us
+}
