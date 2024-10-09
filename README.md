@@ -27,7 +27,9 @@
 - [💖Ads](#ads)
 
 ## 🧐 About <a name = "about"></a>
-This bot is inspired by [Asta](https://discord.com/application-directory/1259476682730111097), but it doesn't include the full source code of Asta. Below is a basic implementation of a Discord bot using **Seyfert** and **TypeScript** that can handle messages and commands efficiently.
+This bot is the **full source code** of [Asta](https://discord.com/application-directory/1259476682730111097), a powerful and efficient Discord bot. The implementation below uses **Seyfert** and **TypeScript**, providing a solid structure to handle messages and commands effortlessly.
+
+Asta is designed to deliver a smooth user experience while being highly extensible. This code contains everything needed to get Asta up and running on your own Discord server, complete with essential features for managing messages, handling commands, and integrating with music functionality.
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 

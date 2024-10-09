@@ -1,18 +1,19 @@
-import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { CommandContext } from "seyfert";
 import { PlayCommandOptions } from "@/client/commands/music/play";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ads_component, ads_image, ads_text } from "@/lib/ad";
+import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
-export default new ServiceExecute({
+const MusicPlay: ServiceExecute = {
 	name: "MusicPlay",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>) {
 		const { guildId, channelId, member } = interaction;
 		const t = client.t(database.lang);
-		let query = interaction.options["search"];
+		const query = interaction.options["search"];
 		let node = interaction.options["node"];
-		const voice = await client.cache.voiceStates?.get(member!.id, guildId)?.channel();
+		const voice = await client.cache.voiceStates?.get(member.id, guildId)?.channel();
 		if (!voice?.is(["GuildVoice", "GuildStageVoice"]))
 			return interaction.editOrReply({
 				embeds: [
@@ -22,7 +23,7 @@ export default new ServiceExecute({
 					},
 				],
 			});
-		let bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
+		const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
 		const selectedNode = client.sakulink.nodes.get(node);
 		if (!selectedNode || selectedNode.socket?.readyState !== WebSocket.OPEN) {
 			node = client.sakulink.nodes.filter(n => n.socket?.readyState === WebSocket.OPEN).random().options.identifier;
@@ -236,4 +237,5 @@ export default new ServiceExecute({
 			}
 		}
 	},
-});
+};
+export default MusicPlay;

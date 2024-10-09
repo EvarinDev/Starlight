@@ -2,14 +2,15 @@ import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { CommandContext, InteractionGuildMember } from "seyfert";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 
-export default new ServiceExecute({
+const PauseCommand: ServiceExecute = {
 	name: "PauseCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext) {
 		try {
-			const member = interaction.member as InteractionGuildMember;
+			const member = interaction.member;
 			const t = client.t(database.lang);
-			const voice = await client.cache.voiceStates?.get(member!.id, interaction.guildId)?.channel();
+			const voice = await client.cache.voiceStates?.get(member.id, interaction.guildId)?.channel();
 			if (!voice?.is(["GuildVoice", "GuildStageVoice"]))
 				return interaction.editOrReply({
 					embeds: [
@@ -19,8 +20,8 @@ export default new ServiceExecute({
 						},
 					],
 				});
-			let bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
-			let player = client.sakulink.players.get(interaction.guildId);
+			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
+			const player = client.sakulink.players.get(interaction.guildId);
 			if (!player)
 				return interaction.editOrReply({
 					content: `Error: Not Found`,
@@ -41,6 +42,9 @@ export default new ServiceExecute({
 			});
 		} catch (error) {
 			interaction.editOrReply(error);
+			return error;
 		}
 	},
-});
+};
+
+export default PauseCommand;

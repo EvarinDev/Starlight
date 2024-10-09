@@ -4,8 +4,9 @@ import { CommandContext, Embed } from "seyfert";
 import { LoopCommandOptions } from "@/client/commands/music/loop";
 import { ads_component, ads_image, ads_text } from "@/lib/ad";
 
-export default new ServiceExecute({
+const LoopCommand: ServiceExecute = {
 	name: "LoopCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>) {
 		try {
@@ -92,6 +93,8 @@ export default new ServiceExecute({
 		} catch (err) {
 			console.error(err);
 			await interaction.editOrReply({ content: (err as Error).message });
+			return err;
 		}
 	},
-});
+};
+export default LoopCommand;

@@ -2,16 +2,17 @@ import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { CommandContext, InteractionGuildMember } from "seyfert";
 
-export default new ServiceExecute({
+const StopCommand: ServiceExecute = {
 	name: "StopCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext) {
 		try {
-			const member = interaction.member as InteractionGuildMember;
+			const member = interaction.member;
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);
-			let bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
-			const voice = await client.cache.voiceStates?.get(member!.id, interaction.guildId)?.channel();
+			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
+			const voice = await client.cache.voiceStates?.get(member.id, interaction.guildId)?.channel();
 			if (!player)
 				return interaction.editOrReply({
 					content: `Error: Not Found`,
@@ -52,4 +53,6 @@ export default new ServiceExecute({
 			return error;
 		}
 	},
-});
+};
+
+export default StopCommand;

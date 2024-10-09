@@ -33,7 +33,7 @@ const config: { [key: string]: IConfig } = {
 		],
 	},
 };
-export default config[process.env.NODE_ENV || "development"] as IConfig;
+export default config[process.env.NODE_ENV || "development"];
 
 interface IConfig {
 	Lavalink: NodeOptions[];

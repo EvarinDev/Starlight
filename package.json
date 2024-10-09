@@ -1,8 +1,8 @@
 {
-  "name": "starlight",
+  "name": "@starlight/client",
   "module": "src/cluster.ts",
   "main": "dist/cluster.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "EvarinDev",
   "license": "MIT",
   "scripts": {

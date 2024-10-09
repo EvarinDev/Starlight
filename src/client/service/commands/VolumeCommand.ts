@@ -1,19 +1,20 @@
-import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { InteractionGuildMember, CommandContext } from "seyfert";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { VolumeCommandOptions } from "@/client/commands/music/volume";
+import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
-export default new ServiceExecute({
+const VolumeCommand: ServiceExecute ={
 	name: "VolumeCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext<typeof VolumeCommandOptions>) {
 		try {
 			const percent = interaction.options.percent;
-			const member = interaction.member as InteractionGuildMember;
+			const member = interaction.member;
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);
-			let bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
-			const voice = await client.cache.voiceStates?.get(member!.id, interaction.guildId)?.channel();
+			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
+			const voice = await client.cache.voiceStates?.get(member.id, interaction.guildId)?.channel();
 			if (!player)
 				return interaction.editOrReply({
 					content: `Error: Not Found`,
@@ -41,7 +42,7 @@ export default new ServiceExecute({
 					],
 				});
 			}
-			player.setVolume(percent as number);
+			player.setVolume(percent);
 			return await interaction.editOrReply({
 				embeds: [
 					{
@@ -53,6 +54,9 @@ export default new ServiceExecute({
 			});
 		} catch (error) {
 			interaction.editOrReply(error);
+			return error;
 		}
 	},
-});
+};
+
+export default VolumeCommand;
