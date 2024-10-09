@@ -1,4 +1,4 @@
-import chalk, { ChalkInstance } from "chalk";
+import c, { StyleFunction } from "ansi-colors";
 import { getInfo } from "discord-hybrid-sharding";
 import { LogLevels } from "seyfert/lib/common";
 
@@ -49,12 +49,12 @@ export class Logger {
     [LogLevels.Fatal]: "💀",
   };
 
-  private colors: Record<LogLevels, ChalkInstance> = {
-    [LogLevels.Debug]: chalk.grey,
-    [LogLevels.Error]: chalk.red,
-    [LogLevels.Info]: chalk.blue,
-    [LogLevels.Warn]: chalk.yellow,
-    [LogLevels.Fatal]: chalk.red,
+  private colors: Record<LogLevels, StyleFunction> = {
+    [LogLevels.Debug]: c.grey,
+    [LogLevels.Error]: c.red,
+    [LogLevels.Info]: c.blue,
+    [LogLevels.Warn]: c.yellow,
+    [LogLevels.Fatal]: c.red,
   };
 
   private logMessage(level: LogLevels, ...args: unknown[]): void {
@@ -64,7 +64,7 @@ export class Logger {
     const label: string = this.prefixes.get(level) ?? "---";
     const timeFormat: string = `[${date.toLocaleDateString()} : ${date.toLocaleTimeString()}]`;
 
-    const text = `${chalk.grey(`${timeFormat}`)} [Starlight: ${this.name}] ${chalk.grey(this.formatMemoryUsage(memory.rss))} ${this.emojis[level]} [${this.colors[level](label)}] ${this.addPadding(label)}`;
+    const text = `${c.grey(`${timeFormat}`)} [Starlight: ${this.name}] ${c.grey(this.formatMemoryUsage(memory.rss))} ${this.emojis[level]} [${this.colors[level](label)}] ${this.addPadding(label)}`;
 
     console.log(text, ...args);
   }
