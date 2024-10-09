@@ -2,8 +2,9 @@ import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { CommandContext, InteractionGuildMember } from "seyfert";
 
-export default new ServiceExecute({
+const StopCommand: ServiceExecute = {
 	name: "StopCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext) {
 		try {
@@ -52,4 +53,6 @@ export default new ServiceExecute({
 			return error;
 		}
 	},
-});
+};
+
+export default StopCommand;

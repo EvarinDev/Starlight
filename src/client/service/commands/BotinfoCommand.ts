@@ -4,8 +4,9 @@ import { Embed } from "seyfert";
 import os from "os";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
-export default new ServiceExecute({
+const Botinfo: ServiceExecute = {
     name: "BotinfoCommand",
+    type: "commands",
     filePath: __filename,
     async execute(client, database: IDatabase, interaction: CommandContext) {
         try {
@@ -159,4 +160,5 @@ export default new ServiceExecute({
             });
         }
     },
-});
+};
+export default Botinfo;

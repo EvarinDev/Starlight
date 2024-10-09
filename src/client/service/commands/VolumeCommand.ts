@@ -1,10 +1,11 @@
-import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { InteractionGuildMember, CommandContext } from "seyfert";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { VolumeCommandOptions } from "@/client/commands/music/volume";
+import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
-export default new ServiceExecute({
+const VolumeCommand: ServiceExecute ={
 	name: "VolumeCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext<typeof VolumeCommandOptions>) {
 		try {
@@ -53,6 +54,9 @@ export default new ServiceExecute({
 			});
 		} catch (error) {
 			interaction.editOrReply(error);
+			return error;
 		}
 	},
-});
+};
+
+export default VolumeCommand;

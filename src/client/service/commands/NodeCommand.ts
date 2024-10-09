@@ -4,8 +4,9 @@ import { CommandContext } from "seyfert";
 import { Node } from "sakulink";
 import { stripIndent } from "common-tags";
 
-export default new ServiceExecute({
+const NodeCommand: ServiceExecute = {
 	name: "NodeCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext) {
 		interaction.deferReply();
@@ -41,4 +42,6 @@ export default new ServiceExecute({
 			],
 		});
 	},
-});
+};
+
+export default NodeCommand;

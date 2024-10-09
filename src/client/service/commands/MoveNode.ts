@@ -1,10 +1,11 @@
-import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { CommandContext, InteractionGuildMember } from "seyfert";
 import { MoveNodeCommandOptions } from "@/client/commands/music/move-node";
+import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
-export default new ServiceExecute({
+const MoveNode: ServiceExecute = {
     name: "MoveNode",
+	type: "commands",
     filePath: __filename,
     async execute(client, database: IDatabase, interaction: CommandContext<typeof MoveNodeCommandOptions>) {
         try {
@@ -42,6 +43,8 @@ export default new ServiceExecute({
 			});
 		} catch (error) {
 			interaction.editOrReply(error);
+			return error;
 		}
     },
-})
+}
+export default MoveNode;

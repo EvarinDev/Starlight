@@ -1,11 +1,12 @@
-import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { CommandContext } from "seyfert";
 import { PlayCommandOptions } from "@/client/commands/music/play";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ads_component, ads_image, ads_text } from "@/lib/ad";
+import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
-export default new ServiceExecute({
+const MusicPlay: ServiceExecute = {
 	name: "MusicPlay",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>) {
 		const { guildId, channelId, member } = interaction;
@@ -236,4 +237,5 @@ export default new ServiceExecute({
 			}
 		}
 	},
-});
+};
+export default MusicPlay;

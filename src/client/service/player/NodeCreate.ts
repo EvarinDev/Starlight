@@ -1,8 +1,10 @@
 import { PlayerExecute } from "@/client/structures/ServiceExecute";
 
-export default new PlayerExecute({
+const NodeCreate: PlayerExecute = {
 	name: "nodeCreate",
+	type: "player",
 	async execute(client, node) {
 		return client.logger.info(`Node ${node.options.identifier} created`);
 	},
-});
+};
+export default NodeCreate;

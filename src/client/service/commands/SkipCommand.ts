@@ -2,8 +2,9 @@ import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { CommandContext } from "seyfert";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 
-export default new ServiceExecute({
+const SkipCommand: ServiceExecute = {
 	name: "SkipCommand",
+	type: "commands",
 	filePath: __filename,
 	async execute(client, database: IDatabase, interaction: CommandContext) {
 		try {
@@ -51,4 +52,5 @@ export default new ServiceExecute({
 			return error;
 		}
 	},
-});
+};
+export default SkipCommand;

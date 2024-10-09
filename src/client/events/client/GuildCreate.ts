@@ -9,10 +9,9 @@ export default createEvent({
 			data: {
 				id: guild.id,
 				lang: "en",
-				client_id: client.me.id,
 				name: guild.name,
-				room: { create: { client_id: client.me.id, id: "" } },
-				ai: { create: { client_id: client.me.id, name: "", channel: "" } },
+				room: { create: { id: "" } },
+				ai: { create: { name: "", channel: "" } },
 			},
 			select: {
 				uuid: true,
