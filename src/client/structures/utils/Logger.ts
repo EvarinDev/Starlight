@@ -12,7 +12,8 @@ function formatMemoryUsage(bytes: number): string {
 		i++;
 	}
 
-	return `[RAM: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${bytes.toFixed(2)} ${units[i]}] [${getInfo().SHARD_LIST || "N/A"}]`;
+	const shardList = (getInfo()?.SHARD_LIST ?? "N/A").toString();
+    return `[RAM: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${bytes.toFixed(2)} ${units[i]}] [${shardList}]`;
 }
 
 function addPadding(label: string): string {

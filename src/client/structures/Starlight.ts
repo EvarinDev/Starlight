@@ -24,10 +24,10 @@ export class Starlight extends Client {
 			},
 			commands: {
 				defaults: {
-					onAfterRun(context, error) {
-						if (error) return context.client.logger.error(`Error running command ${context.command.name} | User: ${context.author.username}(${context.author.id}) | Error: ${error}`);
+					onAfterRun(context, error: Error) {
+						if (error) return context.client.logger.error(`Error running command ${context.command.name} | User: ${context.author.username}(${context.author.id}) | Error: ${error.message}`);
 					},
-					onRunError: async (ctx, error) => {
+					onRunError: async (ctx, error: Error) => {
 						this.logger.error(error);
 						return ErrorRequest(ctx, error);
 					},
@@ -40,12 +40,14 @@ export class Starlight extends Client {
 			shards: this.cluster.info.TOTAL_SHARDS,
 			autoMove: true,
 			autoResume: true,
-			send: async (id, payload) => {
-				const guild = await this.guilds.fetch(id);
-				if (!guild) return;
-
-				const shardId = this.gateway.calculateShardId(guild.id);
-				return this.gateway.send(shardId, payload);
+			send: (id, payload) => {
+				this.guilds.fetch(id).then(guild => {
+					if (!guild) return;
+					const shardId = this.gateway.calculateShardId(guild.id);
+					this.gateway.send(shardId, payload);
+				}).catch((error: Error) => {
+					this.logger.error(`Failed to send payload: ${error.message}`);
+				});
 			},
 		});
 		this.setServices({
@@ -68,7 +70,11 @@ export class Starlight extends Client {
 		this.redis = new Redis(config.REDIS)
 		this.prisma = new PrismaClient();
 		this.services = new ServiceLoader(this);
-		this.services.load();
+		this.services.load().then(() => {
+			this.logger.info(`[System] Services loaded`);
+		}).catch((error: Error) => {
+			this.logger.error(`[System] Error loading plugins: ${error.message}`);
+		});
 	}
 	public FormatTime(milliseconds: number): string {
 		const seconds = Math.floor((milliseconds / 1000) % 60);
@@ -102,9 +108,9 @@ export class Starlight extends Client {
 		return Math.round((bytes / Math.pow(1024, i)) * 100) / 100 + " " + sizes[i];
 	}
 	public async reboot() {
-		this.services.reboot();
-		this.commands.reloadAll();
-		this.events.reloadAll();
+		await this.services.reboot();
+		await this.commands.reloadAll();
+		await this.events.reloadAll();
 		this.logger.info("[System] Rebooted");
 	}
 }
