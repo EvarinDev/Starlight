@@ -10,8 +10,8 @@ const SkipCommand: ServiceExecute = {
 		try {
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);
-			let bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
-			const voice = await client.cache.voiceStates?.get(interaction.member!.id, interaction.guildId)?.channel();
+			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
+			const voice = await client.cache.voiceStates?.get(interaction.member.id, interaction.guildId)?.channel();
 			if (!player)
 				return interaction.editOrReply({
 					content: `Error: Not Found`,

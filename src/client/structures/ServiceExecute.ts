@@ -171,7 +171,7 @@ export class ServiceLoader {
 			service.filePath = filePath;
 
 			const type = this.getServiceType(filePath);
-			const serviceMap = this.services.get(type)!;
+			const serviceMap = this.services.get(type);
 			serviceMap.set(service.name, service);
 
 			if (type === 'player') {

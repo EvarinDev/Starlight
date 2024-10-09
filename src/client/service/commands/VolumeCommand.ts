@@ -10,11 +10,11 @@ const VolumeCommand: ServiceExecute ={
 	async execute(client, database: IDatabase, interaction: CommandContext<typeof VolumeCommandOptions>) {
 		try {
 			const percent = interaction.options.percent;
-			const member = interaction.member as InteractionGuildMember;
+			const member = interaction.member;
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);
-			let bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
-			const voice = await client.cache.voiceStates?.get(member!.id, interaction.guildId)?.channel();
+			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
+			const voice = await client.cache.voiceStates?.get(member.id, interaction.guildId)?.channel();
 			if (!player)
 				return interaction.editOrReply({
 					content: `Error: Not Found`,
@@ -42,7 +42,7 @@ const VolumeCommand: ServiceExecute ={
 					],
 				});
 			}
-			player.setVolume(percent as number);
+			player.setVolume(percent);
 			return await interaction.editOrReply({
 				embeds: [
 					{

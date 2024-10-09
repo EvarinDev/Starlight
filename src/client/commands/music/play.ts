@@ -7,7 +7,7 @@ export const PlayCommandOptions = {
 		required: true,
 		autocomplete: async (interaction: AutocompleteInteraction) => {
 			const { client } = interaction;
-			let song = interaction.getInput();
+			const song = interaction.getInput();
 			if (!song) {
 				const jirayuMusic = (await fetch("https://api.jirayu.net/lavalink/track").then((it) => it.json())) as {
 					id: number;

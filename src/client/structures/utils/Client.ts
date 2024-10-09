@@ -46,7 +46,7 @@ export async function UpdateStatus(client: UsingClient) {
 
 export async function DumpGuildForNewDB(client: UsingClient) {
 	return await client.cache.guilds.keys().map(async (key) => {
-		let guild = client.cache.guilds.get(key);
+		const guild = client.cache.guilds.get(key);
 		const redisGuild = await client.redis.get(`guild:${client.me.id}:${guild.id}`) as unknown as IDatabase;
 		if (redisGuild && guild.id === redisGuild.id) return;
 		const db = await client.prisma.guild.create({
