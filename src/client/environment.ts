@@ -16,7 +16,6 @@ declare global {
 			NODE_ENV: "development" | "production";
 			PRODUCTION_TOKEN: string;
 			PRODUCTION_REDIS: string;
-			
 			DEVELOPMENT_TOKEN: string;
 			DEVELOPMENT_REDIS: string;
 		}
