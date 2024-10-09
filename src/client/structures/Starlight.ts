@@ -65,6 +65,7 @@ export class Starlight extends Client {
 					bans: true,
 					presences: true,
 					stageInstances: true,
+					channels: true,
 				},
 				adapter: new StringCacheAdapter()
 			},
