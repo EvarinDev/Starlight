@@ -8,9 +8,9 @@ client.start().then(() => {
 	client.uploadCommands();
 	//client.redis.connect();
 });
-// process.on("unhandledRejection", async (reason, promise) => {
-// 	client.logger.error(`Unhandled Rejection at: ${await promise} reason: ${reason}`);
-// });
-// process.on("uncaughtException", (err) => {
-// 	client.logger.error(`Uncaught Exception: ${err.message}`);
-// });
+process.on("unhandledRejection", async (reason, promise) => {
+	client.logger.error(`Unhandled Rejection at: ${await promise} reason: ${reason}`);
+});
+process.on("uncaughtException", (err) => {
+	client.logger.error(`Uncaught Exception: ${err.message}`);
+});
