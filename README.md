@@ -55,6 +55,7 @@ git clone https://github.com/EvarinDev/Starlight.git
 cd Starlight
 bun run full-install
 Rename .env.example to .env and Setup Config
+bun run dev
 ```
 
 ## ⛏️ Built Using <a name = "built_using"></a>
