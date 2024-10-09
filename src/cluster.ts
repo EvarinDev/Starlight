@@ -23,7 +23,7 @@ manager.on("clusterCreate", (cluster) => {
 	cluster.on("disconnect", () => console.warn(`Cluster ${cluster.id} disconnected`));
 	cluster.on("reconnecting", () => console.warn(`Cluster ${cluster.id} reconnecting`));
 	cluster.on("exit", () => console.error(`Cluster ${cluster.id} exited`));
-	cluster.on("message", (message) => console.info(`Cluster ${cluster.id} message: ${message}`));
+	cluster.on("message", (message) => console.info(`Cluster ${cluster.id} message: ${JSON.stringify(message)}`));
 	cluster.on("error", (error) => console.error(`Cluster ${cluster.id} error: ${error}`));
 	cluster.on("warn", (warn) => console.warn(`Cluster ${cluster.id} warn: ${warn}`));
 	process.on("SIGINT", () => {
@@ -34,4 +34,6 @@ manager.on("clusterCreate", (cluster) => {
 	});
 });
 manager.on("debug", (debug) => console.debug(debug));
-manager.spawn({ timeout: -1 });
+manager.spawn({ timeout: -1 })
+	.then(() => console.info("All clusters spawned"))
+	.catch((error) => console.error("Error spawning clusters:", error));

@@ -3,7 +3,7 @@ import "dotenv/config";
 
 const config: { [key: string]: IConfig } = {
 	development: {
-		TOKEN: process.env.DISCORD_TOKEN,
+		TOKEN: process.env.DEVELOPMENT_TOKEN,
 		REDIS: process.env.DEVELOPMENT_REDIS,
 		Lavalink: [
 			{

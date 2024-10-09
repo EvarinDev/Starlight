@@ -1,6 +1,6 @@
-import chalk, { ChalkInstance } from "chalk";
 import { getInfo } from "discord-hybrid-sharding";
 import { Logger } from "seyfert";
+import c, { StyleFunction } from "ansi-colors";
 import { LogLevels } from "seyfert/lib/common";
 
 function formatMemoryUsage(bytes: number): string {
@@ -12,7 +12,8 @@ function formatMemoryUsage(bytes: number): string {
 		i++;
 	}
 
-	return `[RAM: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${bytes.toFixed(2)} ${units[i]}] [${getInfo().SHARD_LIST || "N/A"}]`;
+	const shardList = (getInfo()?.SHARD_LIST ?? "N/A").toString();
+    return `[RAM: ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)} / ${bytes.toFixed(2)} ${units[i]}] [${shardList}]`;
 }
 
 function addPadding(label: string): string {
@@ -42,15 +43,14 @@ export function customLogger(_this: Logger, level: LogLevels, args: unknown[]): 
 		[LogLevels.Fatal]: "💀",
 	};
 
-	const colors: Record<LogLevels, ChalkInstance> = {
-		[LogLevels.Debug]: chalk.grey,
-		[LogLevels.Error]: chalk.red,
-		[LogLevels.Info]: chalk.blue,
-		[LogLevels.Warn]: chalk.yellow,
-		[LogLevels.Fatal]: chalk.red,
+	const colors: Record<LogLevels, StyleFunction> = {
+		[LogLevels.Debug]: c.grey,
+		[LogLevels.Error]: c.red,
+		[LogLevels.Info]: c.blue,
+		[LogLevels.Warn]: c.yellow,
+		[LogLevels.Fatal]: c.red,
 	};
-
-	const text = `${chalk.grey(`${timeFormat}`)} [Starlight] ${chalk.grey(formatMemoryUsage(memory.rss))} ${emojis[level]} [${colors[level](label)}] ${addPadding(label)}`;
+	const text = `${(`${timeFormat}`)} [Starlight] ${c.grey(formatMemoryUsage(memory.rss))} ${emojis[level]} [${colors[level](label)}] ${addPadding(label)}`;
 
 	return [text, ...args];
 }

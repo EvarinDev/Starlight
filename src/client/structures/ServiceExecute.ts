@@ -8,18 +8,18 @@ import { IDatabase } from "../interfaces/IDatabase";
 type ServiceType = 'commands' | 'services' | 'player';
 
 interface BaseService {
-	name: string;
-	execute: (...args: any[]) => Promise<void>;
-	filePath?: string;
+    name: string;
+    execute: (...args: unknown[] | any[] ) => Promise<void>;
+    filePath?: string;
 }
 
 export interface ServiceExecute extends BaseService {
-	type: Exclude<ServiceType, 'player'>;
+    type: Exclude<ServiceType, 'player'>;
 }
 
 export interface PlayerExecute extends BaseService {
-	type: 'player';
-	name: keyof ManagerEvents;
+    type: 'player';
+    name: keyof ManagerEvents;
 }
 
 export class ServiceLoader {
