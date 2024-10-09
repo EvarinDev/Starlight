@@ -25,6 +25,7 @@
 - [⛏️ Built Using ](#️-built-using-)
 - [✍️ Authors ](#️-authors-)
 - [💖Ads](#ads)
+- [Star History](#star-history)
 
 ## 🧐 About <a name = "about"></a>
 This bot is the **full source code** of [Asta](https://discord.com/application-directory/1259476682730111097), a powerful and efficient Discord bot. The implementation below uses **Seyfert** and **TypeScript**, providing a solid structure to handle messages and commands effortlessly.
@@ -72,3 +73,7 @@ See also the list of [contributors](https://github.com/EvarinDev/Starlight/contr
 ## 💖Ads
 Rinthong Server: https://discord.gg/rinthong
 <img src="https://cdn.faystarnext.studio/RinthongAds.png" />
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=EvarinDev/Starlight&type=Date)](https://star-history.com/#EvarinDev/Starlight&Date)
