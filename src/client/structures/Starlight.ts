@@ -6,6 +6,7 @@ import { Manager } from "sakulink";
 import { ErrorRequest } from "./utils/Client";
 import { Redis } from "ioredis";
 import { ClusterClient, getInfo } from "discord-hybrid-sharding";
+import { StringCacheAdapter } from "./utils/StringCacheAdapter";
 
 export class Starlight extends Client {
 	public redis: Redis;
@@ -65,6 +66,7 @@ export class Starlight extends Client {
 					presences: true,
 					stageInstances: true,
 				},
+				adapter: new StringCacheAdapter()
 			},
 		});
 		this.redis = new Redis(config.REDIS)

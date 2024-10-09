@@ -42,7 +42,7 @@ export function UpdateStatus(client: UsingClient) {
                 }),
             }),
         ).then((d) => {
-			client.logger.debug("Redis updated:" + d);
+			return d
 		}).catch((e) => {
 			client.logger.error("UpdateStatus Error:" + e);
 		});
