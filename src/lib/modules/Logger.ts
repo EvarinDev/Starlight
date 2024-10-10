@@ -63,9 +63,7 @@ export class Logger {
 
     const label: string = this.prefixes.get(level) ?? "---";
     const timeFormat: string = `[${date.toLocaleDateString()} : ${date.toLocaleTimeString()}]`;
-
     const text = `${c.grey(`${timeFormat}`)} [Starlight: ${this.name}] ${c.grey(this.formatMemoryUsage(memory.rss))} ${this.emojis[level]} [${this.colors[level](label)}] ${this.addPadding(label)}`;
-
     console.log(text, ...args);
   }
 
