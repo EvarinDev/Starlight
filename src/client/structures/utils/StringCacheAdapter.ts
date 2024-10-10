@@ -15,7 +15,7 @@ export class StringCacheAdapter implements Adapter {
             encode: JSON.stringify,
             decode: (data: string) => {
                 try {
-                    return JSON.parse(data);
+                    return JSON.parse(data) as unknown;
                 } catch {
                     return data; // Return as-is if it's not JSON
                 }
@@ -24,7 +24,7 @@ export class StringCacheAdapter implements Adapter {
     ) {}
 
     start() {}
-
+    // eslint-disable-next-line @typescript-eslint/require-await
     async scan(query: string, keys: boolean = false): Promise<string[]> {
         return [...this.storage.entries()]
             .filter(([key]) => key.split('.').every((v, i) => v === query.split('.')[i] || v === '*'))
