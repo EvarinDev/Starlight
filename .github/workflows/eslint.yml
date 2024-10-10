@@ -45,10 +45,10 @@ jobs:
           --output-file eslint-results.sarif
         continue-on-error: true
 
-      - name: Debugging Step: Check if SARIF file exists
+      - name: Debugging Step
         run: ls -la eslint-results.sarif
 
-      - name: Debugging Step: Print ESLint logs
+      - name: Debugging Step
         run: cat eslint-results.sarif || echo "No SARIF file generated"
 
       - name: Upload analysis results to GitHub
