@@ -38,7 +38,7 @@ jobs:
       - name: Run ESLint
         env:
           SARIF_ESLINT_IGNORE_SUPPRESSED: "true"
-        run: npx eslint src/**/*.ts --fix
+        run: ls && npx eslint src/**/*.ts --fix
         continue-on-error: true
 
       - name: Debugging Step
