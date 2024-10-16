@@ -8,29 +8,8 @@ export const PlayCommandOptions = {
 		autocomplete: async (interaction: AutocompleteInteraction) => {
 			const { client } = interaction;
 			const song = interaction.getInput();
-			if (!song) {
-				const jirayuMusic = (await fetch("https://api.jirayu.net/lavalink/track").then((it) => it.json())) as {
-					id: number;
-					identifier: string;
-					title: string;
-					uri: string;
-					artworkUrl: string;
-					author: string;
-					isrc: string | null;
-					source: string;
-					count: number;
-					createdAt: string;
-					updatedAt: string;
-				}[];
-
-				return interaction
-					.respond(jirayuMusic.map((it) => ({ name: it.title, value: it.uri })))
-					.then(() => {})
-					.catch(() => {});
-			}
-
 			const res = await client.sakulink.search({
-				query: song,
+				query: song || "Song",
 				source: "youtube",
 			});
 

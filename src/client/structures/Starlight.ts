@@ -41,6 +41,7 @@ export class Starlight extends Client {
 			shards: this.cluster.info.TOTAL_SHARDS,
 			autoMove: true,
 			autoResume: true,
+			autoPlay: true,
 			send: (id, payload) => {
 				this.guilds.fetch(id).then(guild => {
 					if (!guild) return;
