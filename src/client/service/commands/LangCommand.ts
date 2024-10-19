@@ -1,4 +1,4 @@
-import { CommandContext } from "seyfert";
+import { CommandContext, UsingClient } from 'seyfert';
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { PermissionFlagsBits } from "seyfert/lib/types";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
@@ -8,8 +8,8 @@ const LangCommand: ServiceExecute = {
 	name: "LangCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext<typeof LangCommandOptions>) {
-		const lang = interaction.options.language as "en" | "th";
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof LangCommandOptions>) {
+		const lang = interaction.options.language;
 		const t = client.t(database.lang);
 		if (!interaction.guild) return void 0;
 		if (interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {

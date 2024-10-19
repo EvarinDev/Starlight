@@ -1,12 +1,12 @@
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
-import { CommandContext } from "seyfert";
+import { CommandContext, UsingClient } from 'seyfert';
 import { IDatabase } from "@/client/interfaces/IDatabase";
 
 const SkipCommand: ServiceExecute = {
 	name: "SkipCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
 		try {
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);

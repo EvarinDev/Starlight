@@ -1,6 +1,6 @@
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { IDatabase } from "@/client/interfaces/IDatabase";
-import { CommandContext, Embed } from "seyfert";
+import { CommandContext, Embed, UsingClient } from "seyfert";
 import { LoopCommandOptions } from "@/client/commands/music/loop";
 import { ads_component, ads_image, ads_text } from "@/lib/ad";
 
@@ -8,7 +8,7 @@ const LoopCommand: ServiceExecute = {
 	name: "LoopCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>) {
 		try {
 			const player = client.sakulink.players.get(interaction.guildId);
 			if (!player) {
@@ -16,7 +16,7 @@ const LoopCommand: ServiceExecute = {
 					embeds: [new Embed().setColor("Red").setDescription("There is no song currently playing.")],
 				});
 			}
-			const type = interaction.options.type as "song" | "queue" | "off";
+			const type = interaction.options.type;
 
 			if (!type)
 				return interaction.editOrReply({

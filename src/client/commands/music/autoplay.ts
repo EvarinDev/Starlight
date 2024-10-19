@@ -14,7 +14,7 @@ export const AutoPlayCommandOptions = {
 				name: "Disable | ปิด",
 				value: "false",
 			},
-		],
+		] as const,
 	}),
 };
 
