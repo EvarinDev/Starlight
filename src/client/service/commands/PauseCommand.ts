@@ -1,12 +1,12 @@
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
-import { CommandContext, InteractionGuildMember } from "seyfert";
+import { CommandContext, InteractionGuildMember, UsingClient } from 'seyfert';
 import { IDatabase } from "@/client/interfaces/IDatabase";
 
 const PauseCommand: ServiceExecute = {
 	name: "PauseCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
 		try {
 			const member = interaction.member;
 			const t = client.t(database.lang);
@@ -41,7 +41,7 @@ const PauseCommand: ServiceExecute = {
 				content: t.play.pause.get(),
 			});
 		} catch (error) {
-			interaction.editOrReply(error);
+			await interaction.editOrReply(error);
 			return error;
 		}
 	},

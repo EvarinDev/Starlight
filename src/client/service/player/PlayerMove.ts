@@ -1,9 +1,10 @@
 import { PlayerExecute } from "@/client/structures/ServiceExecute";
+import { UsingClient } from 'seyfert';
 
 const PlayerMove: PlayerExecute = {
 	name: "playerMove",
 	type: "player",
-	async execute(client, player, oldChannel, newChannel) {
+	async execute(client: UsingClient, player, oldChannel, newChannel) {
 		return client.logger.info(`Player moved from ${oldChannel} to ${newChannel} on ${player.guild}`);
 	},
 };

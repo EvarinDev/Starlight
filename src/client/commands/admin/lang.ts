@@ -16,7 +16,7 @@ export const LangCommandOptions = {
 				name: "Thai",
 				value: "th",
 			},
-		],
+		] as const,
 	}),
 };
 

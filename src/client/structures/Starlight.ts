@@ -21,7 +21,8 @@ export class Starlight extends Client {
 		super({
 			shards: {
 				start: getInfo().FIRST_SHARD_ID,
-				end: getInfo().SHARD_LIST.length
+				end: getInfo().LAST_SHARD_ID,
+				total: getInfo().TOTAL_SHARDS
 			},
 			commands: {
 				defaults: {
