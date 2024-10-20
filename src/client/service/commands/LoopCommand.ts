@@ -8,7 +8,11 @@ const LoopCommand: ServiceExecute = {
 	name: "LoopCommand",
 	type: "commands",
 	filePath: __filename,
+<<<<<<< HEAD
 	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>): Promise<void> {
+=======
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>) {
+>>>>>>> f2fb1f0966638451ac44a5488aae1579780ea498
 		try {
 			const player = client.sakulink.players.get(interaction.guildId);
 			if (!player) {
