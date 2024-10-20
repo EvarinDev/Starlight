@@ -46,7 +46,7 @@ export default class AutoPlayCommand extends Command {
 				}
 			}
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

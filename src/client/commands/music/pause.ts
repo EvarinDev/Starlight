@@ -10,7 +10,7 @@ export default class PauseCommand extends Command {
 		try {
 			return await ctx.client.services.execute("PauseCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

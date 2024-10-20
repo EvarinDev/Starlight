@@ -8,7 +8,7 @@ const MusicPlay: ServiceExecute = {
 	name: "MusicPlay",
 	type: "commands",
 	filePath: __filename,
-	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>): Promise<void> {
 		const { guildId, channelId, member } = interaction;
 		const t = client.t(database.lang);
 		const query = interaction.options["search"];
@@ -40,7 +40,7 @@ const MusicPlay: ServiceExecute = {
 			}) as unknown as void;
 		}
 		if (bot && bot.channelId !== voice.id) return;
-		if (player && player.node.options.identifier !== node) player.moveNode(node);
+		if (player && player.node.options.identifier !== node) player.moveNode(node).then().catch(console.error);
 		const res = await client.sakulink.search({
 			query: query,
 			source: "youtube",
@@ -56,11 +56,11 @@ const MusicPlay: ServiceExecute = {
 				node: node,
 			});
 
-		if (player.state !== "CONNECTED") await player.connect();
+		if (player.state !== "CONNECTED") player.connect();
 		switch (res.loadType) {
 			default:
 				{
-					if (!player.queue.current || !player) return await player.destroy();
+					if (!player.queue.current || !player) return player.destroy();
 				}
 				break;
 			case "error": {

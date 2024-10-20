@@ -11,7 +11,7 @@ export default class SkipCommand extends Command {
 		try {
 			return await ctx.client.services.execute("SkipCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

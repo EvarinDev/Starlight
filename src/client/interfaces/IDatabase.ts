@@ -7,6 +7,7 @@ export interface IDatabase {
 	roomid: string;
 	lang: $Enums.Lang;
 	room: {
+		uuid: string;
 		id: string;
 		message: string;
 	};

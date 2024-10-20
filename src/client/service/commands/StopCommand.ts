@@ -1,24 +1,26 @@
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
-import { CommandContext, InteractionGuildMember, UsingClient } from 'seyfert';
+import { CommandContext, UsingClient } from 'seyfert';
 
 const StopCommand: ServiceExecute = {
 	name: "StopCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext): Promise<void> {
 		try {
 			const member = interaction.member;
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);
 			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
 			const voice = await client.cache.voiceStates?.get(member.id, interaction.guildId)?.channel();
-			if (!player)
-				return interaction.editOrReply({
+			if (!player) {
+				await interaction.editOrReply({
 					content: `Error: Not Found`,
 				});
-			if (!voice?.is(["GuildVoice", "GuildStageVoice"]))
-				return interaction.editOrReply({
+				return;
+			}
+			if (!voice?.is(["GuildVoice", "GuildStageVoice"])) {
+				await interaction.editOrReply({
 					embeds: [
 						{
 							color: 0xff0000,
@@ -26,12 +28,10 @@ const StopCommand: ServiceExecute = {
 						},
 					],
 				});
-			if (!player)
-				return interaction.editOrReply({
-					content: `Error: Not Found`,
-				});
+				return;
+			}
 			if (bot && bot.channelId !== voice.id) {
-				return interaction.editOrReply({
+				await interaction.editOrReply({
 					embeds: [
 						{
 							color: 0xff0000,
@@ -39,9 +39,10 @@ const StopCommand: ServiceExecute = {
 						},
 					],
 				});
+				return;
 			}
-			await player.destroy();
-			return interaction.editOrReply({
+			player.destroy();
+			await interaction.editOrReply({
 				embeds: [
 					{
 						color: 0x00ff00,
@@ -50,7 +51,7 @@ const StopCommand: ServiceExecute = {
 				],
 			});
 		} catch (error) {
-			return error;
+			console.error(error);
 		}
 	},
 };

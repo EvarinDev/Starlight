@@ -6,50 +6,59 @@ const SkipCommand: ServiceExecute = {
 	name: "SkipCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext): Promise<void> {
 		try {
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);
 			const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
 			const voice = await client.cache.voiceStates?.get(interaction.member.id, interaction.guildId)?.channel();
-			if (!player)
-				return interaction.editOrReply({
+			if (!player) {
+				interaction.editOrReply({
 					content: `Error: Not Found`,
-				});
-			if (!voice?.is(["GuildVoice", "GuildStageVoice"]))
-				return interaction.editOrReply({
+				}).then().catch(console.error);
+				return;
+			}
+			if (!voice?.is(["GuildVoice", "GuildStageVoice"])) {
+				interaction.editOrReply({
 					embeds: [
 						{
 							color: 0xff0000,
 							description: t.play.not_join_voice_channel.get(),
 						},
 					],
-				});
-			if (!player)
-				return interaction.editOrReply({
+				}).then().catch(console.error);
+				return;
+			}
+			if (!player) {
+				interaction.editOrReply({
 					content: `Error: Not Found`,
-				});
+				}).then().catch(console.error);
+				return
+			}
 			if (bot && bot.channelId !== voice.id) {
-				return interaction.editOrReply({
+				interaction.editOrReply({
 					embeds: [
 						{
 							color: 0xff0000,
 							description: t.play.not_same_voice_channel.get(),
 						},
 					],
-				});
+				}).then().catch(console.error);
+				return;
 			}
-			await player.stop();
-			return interaction.editOrReply({
+			player.stop();
+			interaction.editOrReply({
 				embeds: [
 					{
 						color: 0x00ff00,
 						description: t.music.skip.get(),
 					},
 				],
-			});
+			}).then().catch(console.error);
+			return;
 		} catch (error) {
-			return error;
+			console.error(error);
+			return;
 		}
 	},
 };

@@ -42,7 +42,7 @@ const LangCommand: ServiceExecute = {
 							await client.redis.set(`guild:${client.me.id}:${data.id}`, JSON.stringify(data));
 							interaction.editOrReply({
 								content: `${t.lang.success.get()}: ${data.lang}`,
-							});
+							}).then().catch(console.error);
 							return void 0;
 						});
 				} else {
@@ -67,7 +67,7 @@ const LangCommand: ServiceExecute = {
 							await client.redis.set(`guild:${client.me.id}:${data.id}`, JSON.stringify(data));
 							interaction.editOrReply({
 								content: `${t.lang.success.get()}: ${data.lang}`,
-							});
+							}).then().catch(console.error);
 							return void 0;
 						});
 				}

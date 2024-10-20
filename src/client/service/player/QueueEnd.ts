@@ -1,12 +1,16 @@
 import { PlayerExecute } from "@/client/structures/ServiceExecute";
 import { UsingClient } from 'seyfert';
+import { Player } from "sakulink";
 
 const QueueEnd: PlayerExecute = {
 	name: "queueEnd",
 	type: "player",
-	async execute(client: UsingClient, player) {
-		player.destroy();
-		return client.logger.info(`Queue ended on ${player.guild} node: ${player.node.options.identifier}`);
+	execute(client: UsingClient, player: Player): Promise<void> {
+		return Promise.resolve(
+			player.destroy()
+		).then(() => {
+			client.logger.info(`Queue ended on ${player.guild} node: ${player.node.options.identifier}`);
+		});
 	},
 };
 
