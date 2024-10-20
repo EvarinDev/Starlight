@@ -1,3 +1,5 @@
+import type English from './en'
+
 export default {
 	lang: {
 		already: "หนูใช้ภาษานี้อยู่แล้วนะ",
@@ -6,7 +8,7 @@ export default {
 	},
 	music: {
 		stop: "หนูหยุดเล่นเพลงแล้วนะ",
-		volume: (value: number) => `เปลี่ยนระดับเสียงเป็น ${value} แล้วนะ`,
+		volume: (value) => `เปลี่ยนระดับเสียงเป็น ${value} แล้วนะ`,
 		resume: "เล่นต่อแล้วนะ",
 		skip: "ข้ามเพลงแล้วนะ",
 	},
@@ -22,4 +24,4 @@ export default {
 		time: "ระยะเวลา",
 		pause: "หยุดชั่วคราวแล้วนะ",
 	},
-};
+} satisfies typeof English; // inherit types from default lang to ensure 1:1 locales

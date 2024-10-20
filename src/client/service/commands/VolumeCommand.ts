@@ -1,4 +1,4 @@
-import { InteractionGuildMember, CommandContext } from "seyfert";
+import { InteractionGuildMember, CommandContext, UsingClient } from 'seyfert';
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { VolumeCommandOptions } from "@/client/commands/music/volume";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
@@ -7,7 +7,7 @@ const VolumeCommand: ServiceExecute ={
 	name: "VolumeCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext<typeof VolumeCommandOptions>) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof VolumeCommandOptions>) {
 		try {
 			const percent = interaction.options.percent;
 			const member = interaction.member;

@@ -18,7 +18,7 @@ export const LoopCommandOptions = {
 				name: "Off",
 				value: "off",
 			},
-		],
+		] as const,
 	}),
 };
 

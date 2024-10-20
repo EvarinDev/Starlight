@@ -1,4 +1,4 @@
-import { ActionRow, CommandContext, StringSelectMenu, SelectMenuInteraction } from "seyfert";
+import { ActionRow, CommandContext, StringSelectMenu, SelectMenuInteraction, UsingClient } from "seyfert";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { Embed } from "seyfert";
 import os from "os";
@@ -8,7 +8,7 @@ const Botinfo: ServiceExecute = {
     name: "BotinfoCommand",
     type: "commands",
     filePath: __filename,
-    async execute(client, database: IDatabase, interaction: CommandContext) {
+    async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
         try {
             const promises = [
                 client.cluster.broadcastEval(async (c) => c.cache.guilds.count()),

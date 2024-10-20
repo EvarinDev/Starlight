@@ -1,12 +1,12 @@
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
-import { CommandContext, InteractionGuildMember } from "seyfert";
+import { CommandContext, InteractionGuildMember, UsingClient } from 'seyfert';
 
 const StopCommand: ServiceExecute = {
 	name: "StopCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
 		try {
 			const member = interaction.member;
 			const t = client.t(database.lang);

@@ -1,5 +1,5 @@
 import { IDatabase } from "@/client/interfaces/IDatabase";
-import { CommandContext, InteractionGuildMember } from "seyfert";
+import { CommandContext, InteractionGuildMember, UsingClient } from 'seyfert';
 import { MoveNodeCommandOptions } from "@/client/commands/music/move-node";
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 
@@ -7,7 +7,7 @@ const MoveNode: ServiceExecute = {
     name: "MoveNode",
 	type: "commands",
     filePath: __filename,
-    async execute(client, database: IDatabase, interaction: CommandContext<typeof MoveNodeCommandOptions>) {
+    async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof MoveNodeCommandOptions>) {
         try {
 			const member = interaction.member;
 			const t = client.t(database.lang);
