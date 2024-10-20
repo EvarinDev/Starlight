@@ -18,7 +18,7 @@ export default class VolumeCommand extends Command {
 		try {
 			return await ctx.client.services.execute("VolumeCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

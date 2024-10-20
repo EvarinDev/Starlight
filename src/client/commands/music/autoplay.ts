@@ -14,7 +14,7 @@ export const AutoPlayCommandOptions = {
 				name: "Disable | ปิด",
 				value: "false",
 			},
-		],
+		] as const,
 	}),
 };
 
@@ -46,7 +46,7 @@ export default class AutoPlayCommand extends Command {
 				}
 			}
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

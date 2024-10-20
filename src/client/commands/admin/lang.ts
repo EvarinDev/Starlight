@@ -16,7 +16,7 @@ export const LangCommandOptions = {
 				name: "Thai",
 				value: "th",
 			},
-		],
+		] as const,
 	}),
 };
 
@@ -30,7 +30,7 @@ export default class LangCommand extends Command {
 		try {
 			return await ctx.client.services.execute("LangCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

@@ -4,7 +4,7 @@ import { ActivityType, PresenceUpdateStatus } from "seyfert/lib/types";
 
 export default createEvent({
 	data: { once: true, name: "botReady" },
-	async run(user, client) {
+	run(user, client) {
 		const users = () => {
 			let totalMembers = 0;
 			for (const guild of client.cache.guilds.values().filter((g) => g.memberCount)) {
@@ -15,11 +15,11 @@ export default createEvent({
 		client.logger.info(`${user.username} is ready ${(process.memoryUsage().heapTotal / 1024 / 1024).toFixed(2)}MB | Guild: ${client.cache.guilds.count()} | User: ${users()}`);
 		client.cluster.maintenance = false;
 		client.sakulink.init(user.id);
-		setInterval(
-			async () => {
+		setInterval(() => {
+			return async () => {
 				const guilds = client.cache.guilds.count();
 				const players = client.sakulink.players.size;
-				await client.gateway.setPresence({
+				return await client.gateway.setPresence({
 					afk: false,
 					since: Date.now(),
 					status: PresenceUpdateStatus.Online,
@@ -30,10 +30,11 @@ export default createEvent({
 						},
 					],
 				});
-			},
+			}
+		},
 			1000 * 60 * 5,
 		);
 		client.logger.info(`[System] Language Data: ${JSON.stringify(client.langs.values)}`);
-		await UpdateStatus(client);
+		return UpdateStatus(client);
 	},
 });

@@ -1,4 +1,4 @@
-import { CommandContext } from "seyfert";
+import { CommandContext, UsingClient } from 'seyfert';
 import { PlayCommandOptions } from "@/client/commands/music/play";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { ads_component, ads_image, ads_text } from "@/lib/ad";
@@ -8,7 +8,7 @@ const MusicPlay: ServiceExecute = {
 	name: "MusicPlay",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>): Promise<void> {
 		const { guildId, channelId, member } = interaction;
 		const t = client.t(database.lang);
 		const query = interaction.options["search"];
@@ -22,7 +22,7 @@ const MusicPlay: ServiceExecute = {
 						description: t.play.not_join_voice_channel.get(),
 					},
 				],
-			});
+			}) as unknown as void;
 		const bot = client.cache.voiceStates?.get(client.me.id, interaction.guildId);
 		const selectedNode = client.sakulink.nodes.get(node);
 		if (!selectedNode || selectedNode.socket?.readyState !== WebSocket.OPEN) {
@@ -37,10 +37,10 @@ const MusicPlay: ServiceExecute = {
 						description: t.play.not_same_voice_channel.get(),
 					},
 				],
-			});
+			}) as unknown as void;
 		}
 		if (bot && bot.channelId !== voice.id) return;
-		if (player && player.node.options.identifier !== node) player.moveNode(node);
+		if (player && player.node.options.identifier !== node) player.moveNode(node).then().catch(console.error);
 		const res = await client.sakulink.search({
 			query: query,
 			source: "youtube",
@@ -56,11 +56,11 @@ const MusicPlay: ServiceExecute = {
 				node: node,
 			});
 
-		if (player.state !== "CONNECTED") await player.connect();
+		if (player.state !== "CONNECTED") player.connect();
 		switch (res.loadType) {
 			default:
 				{
-					if (!player.queue.current || !player) return await player.destroy();
+					if (!player.queue.current || !player) return player.destroy();
 				}
 				break;
 			case "error": {
@@ -76,7 +76,7 @@ const MusicPlay: ServiceExecute = {
 							description: `\`\`\`json\n${JSON.stringify(res, null, "  ")}\`\`\``,
 						},
 					],
-				});
+				}) as unknown as void
 			}
 			case "empty": {
 				if (!player || !player.queue.current) player.destroy();
@@ -86,7 +86,7 @@ const MusicPlay: ServiceExecute = {
 				};
 				return interaction.editOrReply({
 					embeds: [emptyEmbedJson],
-				});
+				}) as unknown as void
 			}
 			case "playlist":
 				{

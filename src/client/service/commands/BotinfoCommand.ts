@@ -1,4 +1,4 @@
-import { ActionRow, CommandContext, StringSelectMenu, SelectMenuInteraction } from "seyfert";
+import { ActionRow, CommandContext, StringSelectMenu, SelectMenuInteraction, UsingClient, Message } from "seyfert";
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { Embed } from "seyfert";
 import os from "os";
@@ -8,11 +8,11 @@ const Botinfo: ServiceExecute = {
     name: "BotinfoCommand",
     type: "commands",
     filePath: __filename,
-    async execute(client, database: IDatabase, interaction: CommandContext) {
+    async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
         try {
             const promises = [
-                client.cluster.broadcastEval(async (c) => c.cache.guilds.count()),
-                client.cluster.broadcastEval(async (c) => {
+                client.cluster.broadcastEval((c) => c.cache.guilds.count()),
+                client.cluster.broadcastEval((c) => {
                     let totalMembers = 0;
                     for (const guild of c.cache.guilds.values().filter((g) => g.memberCount)) {
                         totalMembers += guild.memberCount;
@@ -44,7 +44,6 @@ const Botinfo: ServiceExecute = {
                 ┊ **Ping:** \`${Math.round(client.gateway.latency)}ms\`
                 ┊ **OS:** \`${os.type()} ${os.release()}\`
                 ┊ **CPU:** \`${os.cpus()[0].model}\`
-                ┊ **CPU Usage:** \`${os.loadavg().map((data) => { return ` ${data.toFixed(2)}` })}\`
                 ┊ **Ram:** \`${(process.memoryUsage().rss / 1024 / 1024).toFixed(2)} MB / ${(os.totalmem() / 1024 / 1024 / 1024).toFixed(2)} GB\`
                 ┊ **AvgMemory**: \`(${averageMemoryPerCluster.toFixed(2)} MB) | All Usage: ${results[3].reduce((a: number, b: number) => a + b, 0).toFixed(2)} mb\`
                 ┊ **API:** \`Starlight ${(await import("../../../../package.json")).version}\`
@@ -72,8 +71,8 @@ const Botinfo: ServiceExecute = {
             const maxClustersPerPage = 12;
             const totalPages = Math.ceil(clusterData.length / maxClustersPerPage) + 1;
 
-            const createClusterEmbed = async (page: number): Promise<Embed> => {
-                if (page === 0) return mainEmbed;
+            const createClusterEmbed = (page: number): Promise<Embed> => {
+                if (page === 0) return Promise.resolve(mainEmbed);
 
                 const start = (page - 1) * maxClustersPerPage;
                 const end = Math.min(start + maxClustersPerPage, clusterData.length);
@@ -92,12 +91,12 @@ const Botinfo: ServiceExecute = {
                 clusterInfo.forEach((cluster) => {
                     embed.addFields({
                         name: `<:8891bluestar:1267053991473320069> Cluster: ${cluster.id}`,
-                        value: `\`\`\`autohotkey\nShards: ${cluster.shards} \nGuilds : ${cluster.guilds}\nUsers : ${cluster.users}\nMemory : ${client.FormatMemory(cluster.memory)}\nUptime: ${(client.FormatTime(cluster.uptime))} \`\`\``,
+                        value: `\`\`\`autohotkey\nShards: ${cluster.shards.join(', ')} \nGuilds : ${cluster.guilds}\nUsers : ${cluster.users}\nMemory : ${client.FormatMemory(cluster.memory)}\nUptime: ${(client.FormatTime(cluster.uptime))} \`\`\``,
                         inline: true
                     });
                 });
 
-                return embed;
+                return Promise.resolve(embed);
             };
             const createSelectMenu = () => {
                 const options = [{
@@ -132,7 +131,7 @@ const Botinfo: ServiceExecute = {
                 console.error(err);
                 return;
             }
-            const collector = m.createComponentCollector({
+            const collector = (m as Message).createComponentCollector({
                 timeout: 60000,
                 filter: (i) => i.user.id === interaction.author.id,
             });
@@ -148,9 +147,9 @@ const Botinfo: ServiceExecute = {
             });
 
             collector.run('end', async () => {
-                await m.edit({
+                await (m as Message).edit({
                     components: [],
-                });
+                }).then().catch(() => { });
             });
         } catch (error) {
             console.error(error);

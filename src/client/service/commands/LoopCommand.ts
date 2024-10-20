@@ -1,6 +1,6 @@
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { IDatabase } from "@/client/interfaces/IDatabase";
-import { CommandContext, Embed } from "seyfert";
+import { CommandContext, Embed, UsingClient } from "seyfert";
 import { LoopCommandOptions } from "@/client/commands/music/loop";
 import { ads_component, ads_image, ads_text } from "@/lib/ad";
 
@@ -8,29 +8,32 @@ const LoopCommand: ServiceExecute = {
 	name: "LoopCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>) {
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof LoopCommandOptions>): Promise<void> {
 		try {
 			const player = client.sakulink.players.get(interaction.guildId);
 			if (!player) {
-				return interaction.editOrReply({
+				interaction.editOrReply({
 					embeds: [new Embed().setColor("Red").setDescription("There is no song currently playing.")],
-				});
+				}).then().catch(console.error);
+				return
 			}
-			const type = interaction.options.type as "song" | "queue" | "off";
+			const type = interaction.options.type;
 
-			if (!type)
-				return interaction.editOrReply({
+			if (!type) {
+				interaction.editOrReply({
 					embeds: [
 						{
 							color: 0xff0000,
 							description: "Please specify a loop type.",
 						},
 					],
-				});
+				}).then().catch(console.error);
+				return
+			}
 			switch (type) {
 				case "song": {
 					player.setTrackRepeat(true);
-					return interaction.editOrReply({
+					interaction.editOrReply({
 						components: [ads_component],
 						embeds: [
 							new Embed()
@@ -46,11 +49,12 @@ const LoopCommand: ServiceExecute = {
 								])
 								.setTimestamp(),
 						],
-					});
+					}).then().catch(console.error);
+					return
 				}
 				case "queue": {
 					player.setQueueRepeat(true);
-					return interaction.editOrReply({
+					interaction.editOrReply({
 						components: [ads_component],
 						embeds: [
 							new Embed()
@@ -66,12 +70,13 @@ const LoopCommand: ServiceExecute = {
 								])
 								.toJSON(),
 						],
-					});
+					}).then().catch(console.error);
+					return
 				}
 				case "off": {
 					player.setTrackRepeat(false);
 					player.setQueueRepeat(false);
-					return interaction.editOrReply({
+					interaction.editOrReply({
 						components: [ads_component],
 						embeds: [
 							new Embed()
@@ -87,13 +92,14 @@ const LoopCommand: ServiceExecute = {
 								])
 								.toJSON(),
 						],
-					});
+					}).then().catch(console.error);
+					return
 				}
 			}
 		} catch (err) {
 			console.error(err);
-			await interaction.editOrReply({ content: (err as Error).message });
-			return err;
+			await interaction.editOrReply({ content: (err as Error).message }).then().catch(console.error);
+			return;
 		}
 	},
 };

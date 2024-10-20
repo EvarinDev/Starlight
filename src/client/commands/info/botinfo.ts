@@ -10,7 +10,7 @@ export default class BotinfoCommand extends Command {
 		try {
 			return await ctx.client.services.execute("BotinfoCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

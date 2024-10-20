@@ -1,56 +1,44 @@
-import { $Enums } from "@prisma/client";
+import { IDatabase } from "@/client/interfaces/IDatabase";
 import { createEvent } from "seyfert";
 
 export default createEvent({
 	data: { once: true, name: "guildCreate" },
 	async run(guild, client) {
 		client.logger.info(`Attempting to delete guild ${guild.name}(${guild.id})`);
-		const databaseString: string | null = await client.redis.get(`guild:${client.me.id}:${guild.id}`);
-		const database: {
-			uuid: string;
-			id: string;
-			name: string;
-			lang: $Enums.Lang;
-			room: {
-				uuid: string;
-				id: string;
-				message: string;
-			};
-			ai: {
-				name: string;
-				channel: string;
-			};
-		} = databaseString
-			? JSON.parse(databaseString)
-			: await client.prisma.guild.findFirst({
-					where: {
-						id: guild.id,
-					},
-					select: {
-						uuid: true,
-						id: true,
-						name: true,
-						room: {
-							select: {
-								id: true,
-								message: true,
-								uuid: true,
-							},
-						},
-						ai: {
-							select: {
-								name: true,
-								channel: true,
-							},
-						},
-						lang: true,
-					},
-				});
-		const existingGuild = await client.prisma.guild.findUnique({
-			where: {
+        const databaseString: string | null = await client.redis.get(`guild:${client.me.id}:${guild.id}`);
+        const database: IDatabase = databaseString
+            ? (JSON.parse(databaseString) as IDatabase)
+            : await client.prisma.guild.findFirst({
+                    where: {
+                        id: guild.id,
+                    },
+                    select: {
+                        uuid: true,
+                        id: true,
+                        name: true,
+                        roomid: true,
+                        room: {
+                            select: {
+                                id: true,
+                                message: true,
+                                uuid: true,
+                            },
+                        },
+                        ai: {
+                            select: {
+                                name: true,
+                                channel: true,
+                            },
+                        },
+                        lang: true,
+                    },
+                }) as IDatabase;
+        const existingGuild = await client.prisma.guild.findUnique({
+            where: {
 				uuid: database.uuid,
-			},
-		});
+                id: guild.id,
+            },
+        });
 		if (existingGuild) {
 			await client.prisma.guild.delete({
 				where: {
@@ -69,7 +57,7 @@ export default createEvent({
 				.then(() => {
 					client.logger.info(`Deleted guild ${guild.name}(${guild.id}) from the database`);
 				})
-				.catch((error) => {
+				.catch((error: Error) => {
 					client.logger.error(`Error deleting guild ${guild.name}(${guild.id}): ${error.message}`);
 				});
 		} else {

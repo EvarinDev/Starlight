@@ -74,7 +74,7 @@ export default class PlayCommand extends Command {
 		try {
 			return await ctx.client.services.execute("MusicPlay", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

@@ -18,7 +18,7 @@ export const LoopCommandOptions = {
 				name: "Off",
 				value: "off",
 			},
-		],
+		] as const,
 	}),
 };
 
@@ -33,7 +33,7 @@ export default class LoopCommand extends Command {
 		try {
 			return await ctx.client.services.execute("LoopCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

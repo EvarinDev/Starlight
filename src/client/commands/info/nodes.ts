@@ -10,7 +10,7 @@ export default class NodeCommand extends Command {
 		try {
 			return await ctx.client.services.execute("NodeCommand", ctx);
 		} catch (error) {
-			return ErrorRequest(ctx, error);
+			return ErrorRequest(ctx, error as Error);
 		}
 	}
 }

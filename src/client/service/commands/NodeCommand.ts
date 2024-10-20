@@ -1,6 +1,6 @@
 import { ServiceExecute } from "@/client/structures/ServiceExecute";
 import { IDatabase } from "@/client/interfaces/IDatabase";
-import { CommandContext } from "seyfert";
+import { CommandContext, UsingClient } from 'seyfert';
 import { Node } from "sakulink";
 import { stripIndent } from "common-tags";
 
@@ -8,8 +8,8 @@ const NodeCommand: ServiceExecute = {
 	name: "NodeCommand",
 	type: "commands",
 	filePath: __filename,
-	async execute(client, database: IDatabase, interaction: CommandContext) {
-		interaction.deferReply();
+	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
+		await interaction.deferReply();
 		await interaction.editOrReply({
 			embeds: [
 				{
