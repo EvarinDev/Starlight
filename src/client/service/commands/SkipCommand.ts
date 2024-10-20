@@ -6,11 +6,7 @@ const SkipCommand: ServiceExecute = {
 	name: "SkipCommand",
 	type: "commands",
 	filePath: __filename,
-<<<<<<< HEAD
 	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext): Promise<void> {
-=======
-	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext) {
->>>>>>> f2fb1f0966638451ac44a5488aae1579780ea498
 		try {
 			const t = client.t(database.lang);
 			const player = client.sakulink.players.get(interaction.guildId);

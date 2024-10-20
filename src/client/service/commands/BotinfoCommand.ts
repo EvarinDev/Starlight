@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { ActionRow, CommandContext, StringSelectMenu, SelectMenuInteraction, UsingClient, Message } from "seyfert";
-=======
-import { ActionRow, CommandContext, StringSelectMenu, SelectMenuInteraction, UsingClient } from "seyfert";
->>>>>>> f2fb1f0966638451ac44a5488aae1579780ea498
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { Embed } from "seyfert";
 import os from "os";

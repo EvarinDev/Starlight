@@ -8,11 +8,7 @@ const MusicPlay: ServiceExecute = {
 	name: "MusicPlay",
 	type: "commands",
 	filePath: __filename,
-<<<<<<< HEAD
 	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>): Promise<void> {
-=======
-	async execute(client: UsingClient, database: IDatabase, interaction: CommandContext<typeof PlayCommandOptions>) {
->>>>>>> f2fb1f0966638451ac44a5488aae1579780ea498
 		const { guildId, channelId, member } = interaction;
 		const t = client.t(database.lang);
 		const query = interaction.options["search"];
