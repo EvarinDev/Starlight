@@ -20,18 +20,10 @@ process.on("unhandledRejection", (reason, promise) => {
             const result = await promise;
             client.logger.error(`Unhandled Rejection at: ${JSON.stringify(result)} reason: ${String(reason)}`);
         } catch (err: unknown) {
-            if (err instanceof Error) {
-                client.logger.error(`Unhandled Rejection at: ${String(promise)} reason: ${String(reason)}`);
-            } else {
-                client.logger.error(`Unhandled Rejection at: ${String(promise)} reason: ${String(reason)}`);
-            }
+            client.logger.error(`Unhandled Rejection at: ${String(promise)} reason: ${String(reason)}`);
         }
     })().catch((err: unknown) => {
-        if (err instanceof Error) {
-            client.logger.error(`Error in unhandledRejection handler: ${err.message}`);
-        } else {
-            client.logger.error(`Error in unhandledRejection handler: ${String(err)}`);
-        }
+        client.logger.error(`Error in unhandledRejection handler: ${String(err)}`);
     });
 });
 
