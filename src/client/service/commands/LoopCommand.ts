@@ -12,6 +12,7 @@ const LoopCommand: ServiceExecute = {
 		try {
 			const t = client.t(database.lang);
 			const player = client.lithiumx.players.get(interaction.guildId);
+			const ad = await client.utils.GetAds(database.lang as "en" | "th");
 			if (!player) {
 				interaction.editOrReply({
 					embeds: [new Embed().setColor("Red").setDescription(t.loop.not_playing.get())],
@@ -36,16 +37,15 @@ const LoopCommand: ServiceExecute = {
 					player.setTrackRepeat(true);
 					player.setQueueRepeat(false);
 					interaction.editOrReply({
-						components: [config.config.ads_component],
 						embeds: [
 							new Embed()
 								.setColor("#a861ff")
 								.setDescription(t.loop.loop_song.get())
-								.setImage(config.config.ads_image)
+								.setImage(ad.image)
 								.addFields([
 									{
 										name: "Sponsor",
-										value: config.config.ads_text,
+										value: ad.title,
 										inline: false,
 									},
 								])
@@ -58,16 +58,15 @@ const LoopCommand: ServiceExecute = {
 					player.setTrackRepeat(false);
 					player.setQueueRepeat(true);
 					interaction.editOrReply({
-						components: [config.config.ads_component],
 						embeds: [
 							new Embed()
 								.setColor("#a861ff")
 								.setDescription(t.loop.loop_queue.get())
-								.setImage(config.config.ads_image)
+								.setImage(ad.image)
 								.addFields([
 									{
 										name: "Sponsor",
-										value: config.config.ads_text,
+										value: ad.title,
 										inline: false,
 									},
 								])
@@ -80,16 +79,15 @@ const LoopCommand: ServiceExecute = {
 					player.setTrackRepeat(false);
 					player.setQueueRepeat(false);
 					interaction.editOrReply({
-						components: [config.config.ads_component],
 						embeds: [
 							new Embed()
 								.setColor("#a861ff")
 								.setDescription(`Loop closed successfully.`)
-								.setImage(config.config.ads_image)
+								.setImage(ad.image)
 								.addFields([
 									{
 										name: "Sponsor",
-										value: config.config.ads_text,
+										value: ad.title,
 										inline: false,
 									},
 								])

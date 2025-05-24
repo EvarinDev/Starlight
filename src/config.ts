@@ -1,17 +1,12 @@
 import { NodeOptions } from "lithiumx";
 import "dotenv/config";
-import { ActionRow, BuilderComponents, Button } from "seyfert";
 
 const config: { [key: string]: IConfig } = {
 	development: {
 		TOKEN: process.env.DEVELOPMENT_TOKEN,
 		REDIS: process.env.DEVELOPMENT_REDIS,
 		CLIENT_ID: process.env.CLIENT_ID,
-		config: {
-			ads_text: "Anantix Cloud: บริการเปิด Minecraft Server และอื่นๆ อีกมากมาย!",
-			ads_image: "https://r2.anantix.network/assets/img/packpterodactyl.png",
-			ads_component: new ActionRow().addComponents(new Button().setLabel("Link").setStyle(5).setEmoji("🔗").setURL("https://discord.gg/anantix"))
-		},
+		DSA: process.env.DSA,
 		Lavalink: [
 			{
 				identifier: "Anantix SG",
@@ -29,11 +24,7 @@ const config: { [key: string]: IConfig } = {
 		TOKEN: process.env.PRODUCTION_TOKEN,
 		REDIS: process.env.PRODUCTION_REDIS,
 		CLIENT_ID: process.env.CLIENT_ID,
-		config: {
-			ads_text: "Anantix Cloud: บริการเปิด Minecraft Server และอื่นๆ อีกมากมาย!",
-			ads_image: "https://r2.anantix.network/assets/img/packpterodactyl.png",
-			ads_component: new ActionRow().addComponents(new Button().setLabel("Link").setStyle(5).setEmoji("🔗").setURL("https://discord.gg/anantix"))
-		},
+		DSA: process.env.DSA,
 		Lavalink: [
 			{
 				identifier: "Anantix SG",
@@ -56,9 +47,4 @@ interface IConfig {
 	DSA?: string;
 	TOKEN: string;
 	CLIENT_ID: string;
-	config: {
-		ads_text: string;
-		ads_image: string;
-		ads_component: ActionRow<BuilderComponents>;
-	};
 }

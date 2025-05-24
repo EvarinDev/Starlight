@@ -176,3 +176,4 @@ dist
 bun.lockb
 .env
 dump.rdb
+bun.lock

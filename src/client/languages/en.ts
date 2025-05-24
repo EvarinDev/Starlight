@@ -21,6 +21,10 @@ export default {
 		request: "Request by",
 		time: "Time",
 		pause: "Paused",
+		not_playing: "There is no song currently playing.",
+		not_found: "The song was not found.",
+		playlist: "Playlist",
+		track: "Track",
 	},
 	loop: {
 		not_playing: "There is no song currently playing.",

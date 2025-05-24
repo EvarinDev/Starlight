@@ -45,21 +45,15 @@ model Client {
   token String
 }
 
-// model Analytics {
-//   uuid String @id @default(auto()) @map("_id") @db.ObjectId
-// }
-
-// model AnalyticGuild {
-//   uuid String @id @default(auto()) @map("_id") @db.ObjectId
-//   id   String
-//   name String
-// }
-
-// model AnalyticUser {
-//   uuid String @id @default(auto()) @map("_id") @db.ObjectId
-//   id   String
-//   name String
-// }
+model Ads {
+  uuid String @id @default(auto()) @map("_id") @db.ObjectId
+  id   String
+  name String
+  description String
+  lang Lang
+  url  String
+  image String
+}
 
 enum Lang {
   en

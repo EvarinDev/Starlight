@@ -3,7 +3,6 @@ import { UsingClient, CommandContext, Embed } from 'seyfert';
 import { IDatabase } from "@/client/interfaces/IDatabase";
 import { FiltersCommandOptions } from "@/client/commands/music/Filters";
 import { Filters, LithiumXPlayer, } from "lithiumx";
-import config from "@/config";
 
 const FiltersCommmand: ServiceExecute = {
     name: "FiltersCommmand",
@@ -15,7 +14,7 @@ const FiltersCommmand: ServiceExecute = {
         let mode = interaction.options.mode;
         if (typeof mode === "undefined") mode = true;
         const t = client.t(database.lang);
-        console.log(interaction.options)
+        const ad = await client.utils.GetAds(database.lang as "en" | "th");
         if (!player) {
             interaction.editOrReply({
                 embeds: [new Embed().setColor("Red").setDescription(t.loop.not_playing.get())],
@@ -41,11 +40,11 @@ const FiltersCommmand: ServiceExecute = {
                     new Embed()
                         .setColor("#a861ff")
                         .setDescription(t.filter.filter_cleared.get())
-                        .setImage(config.config.ads_image)
+                        .setImage(ad.image)
                         .addFields([
                             {
                                 name: "Sponsor",
-                                value: config.config.ads_text,
+                                value: ad.title,
                                 inline: false,
                             },
                         ])
@@ -62,11 +61,11 @@ const FiltersCommmand: ServiceExecute = {
                         new Embed()
                             .setColor("#a861ff")
                             .setDescription(t.filter.filter_success(filter).get())
-                            .setImage(config.config.ads_image)
+                            .setImage(ad.image)
                             .addFields([
                                 {
                                     name: "Sponsor",
-                                    value: config.config.ads_text,
+                                    value: ad.title,
                                     inline: false,
                                 },
                             ])
@@ -82,11 +81,11 @@ const FiltersCommmand: ServiceExecute = {
                         new Embed()
                             .setColor("#a861ff")
                             .setDescription(t.filter.filter_removed(filter).get())
-                            .setImage(config.config.ads_image)
+                            .setImage(ad.image)
                             .addFields([
                                 {
                                     name: "Sponsor",
-                                    value: config.config.ads_text,
+                                    value: ad.title,
                                     inline: false,
                                 },
                             ])

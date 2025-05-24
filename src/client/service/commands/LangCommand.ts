@@ -12,7 +12,7 @@ const LangCommand: ServiceExecute = {
 		const lang = interaction.options.language;
 		const t = client.t(database.lang);
 		if (!interaction.guild) return void 0;
-		if (interaction.member.permissions.has(PermissionFlagsBits.Administrator)) {
+		if (interaction.member.permissions.has([PermissionFlagsBits.Administrator])) {
 			if (database.lang === lang) {
 				return interaction.editOrReply({
 					content: `${t.lang.already.get()}`,

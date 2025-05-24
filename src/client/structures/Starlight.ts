@@ -1,11 +1,12 @@
 import config from "../../config";
-import { Client } from "seyfert";
 import { PrismaClient } from "@prisma/client";
 import { ServiceLoader } from "./ServiceExecute";
 import { ErrorRequest } from "./utils/Client";
 import { Redis } from "ioredis";
 import { LithiumXManager } from "lithiumx";
 import { ClusterClient } from "./utils/cluster/ClusterClient";
+import { Utils } from "./Utils";
+import DiscordAnalytics from "@/lib/DiscordAnalytics";
 export class Starlight extends ClusterClient {
 	public redis: Redis;
 	public lithiumx: LithiumXManager;
@@ -14,6 +15,12 @@ export class Starlight extends ClusterClient {
 	public get uptime(): number {
 		return process.uptime() * 1000;
 	}
+	public analytics: DiscordAnalytics = new DiscordAnalytics({
+		client: this,
+		apiToken: config.DSA,
+		sharded: true,
+	})
+	public utils: Utils = new Utils(this);
 	constructor() {
 		super({
 			commands: {
