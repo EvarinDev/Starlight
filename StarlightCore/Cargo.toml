@@ -1,0 +1,31 @@
+[package]
+name = "StarlightCore"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# API 
+StarlightAPI = { path = "../StarlightAPI" }
+# Asynchronous runtime
+async-trait = "0.1.58"
+futures-util = { version = "0.3.25", default-features = false }
+tokio = { version = "1.45", features = [ "full" ] }
+tracing = "0.1.37"
+# Discord API
+twilight = { version = "0.16.0" }
+twilight-cache-inmemory = { version = "0.16.0" }
+twilight-gateway = { version = "0.16.0" }
+twilight-http = { version = "0.16.0" }
+twilight-model = { version = "0.16.0" }
+twilight-interactions = { version = "0.16.0" }
+twilight-mention = { version = "0.16.0" }
+twilight-util = { version = "0.16.0", features = ["builder", "snowflake"] }
+# JSON serialization
+serde = { version = "1.0", features = [ "derive" ] }
+serde_json = { version = "1.0" }
+# Environment variables
+dotenv = { version = "0.15", features = [ "dotenv" ] }
+# Error handling
+anyhow = { version = "1.0" }
+# Configuration management
+config = { version = "0.15.11", features = [ "derive" ] }

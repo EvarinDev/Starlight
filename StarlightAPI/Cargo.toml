@@ -1,0 +1,22 @@
+[package]
+name = "StarlightAPI"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# Database
+sea-orm = { version = "1.1.0", features = [ "qlx-postgres", "tokio", "macros" ] }
+# Asynchronous runtime
+async-trait = "0.1.58"
+futures-util = { version = "0.3.25", default-features = false }
+tokio = { version = "1.45", features = [ "full" ] }
+tracing = "0.1.37"
+# JSON serialization
+serde = { version = "1.0", features = [ "derive" ] }
+serde_json = { version = "1.0" }
+# Environment variables
+dotenv = { version = "0.15", features = [ "dotenv" ] }
+# Error handling
+anyhow = { version = "1.0" }
+# Configuration management
+config = { version = "0.15.11", features = [ "derive" ] }
