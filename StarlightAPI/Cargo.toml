@@ -5,7 +5,7 @@ edition = "2024"
 
 [dependencies]
 # Database
-sea-orm = { version = "1.1.0", features = [ "sqlx-postgres", "tokio", "macros" ] }
+sea-orm = { version = "1.1.0", features = [ "sqlx-postgres", "runtime-tokio-native-tls,", "macros" ] }
 # Asynchronous runtime
 async-trait = "0.1.58"
 futures-util = { version = "0.3.25", default-features = false }
