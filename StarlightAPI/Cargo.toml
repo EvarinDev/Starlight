@@ -18,5 +18,3 @@ serde_json = { version = "1.0" }
 dotenv = { version = "0.15", features = [ "dotenv" ] }
 # Error handling
 anyhow = { version = "1.0" }
-# Configuration management
-config = { version = "0.15.11", features = [ "derive" ] }
