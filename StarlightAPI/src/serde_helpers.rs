@@ -11,20 +11,21 @@ use serde::{Deserialize, Deserializer, Serializer, de, ser};
 use serde_with::{DeserializeAs, SerializeAs};
 use time::OffsetDateTime;
 use twilight_model::{id::Id, util::Timestamp};
+/*
+    Serialize twilight [`Id`] as [`i64`].
 
-/// Serialize twilight [`Id`] as [`i64`].
-///
-/// This type implement [`SerializeAs`] and [`DeserializeAs`] and should be
-/// used with the [`serde_as`] macro.
-///
-/// Ids are serialized as [`i64`] for compatibility with databases that
-/// don't support storing integers as [`u64`].
-///
-/// Because one bit is lost when using [`i64`], the maximum timestamp
-/// that can be stored is Sep 06 2084 (which shouldn't be a problem). Any
-/// id that does not fit in a [`i64`] will produce an error.
-///
-/// [`serde_as`]: serde_with::serde_as
+    This type implement [`SerializeAs`] and [`DeserializeAs`] and should be
+    used with the [`serde_as`] macro.
+
+    Ids are serialized as [`i64`] for compatibility with databases that
+    don't support storing integers as [`u64`].
+
+    Because one bit is lost when using [`i64`], the maximum timestamp
+    that can be stored is Sep 06 2084 (which shouldn't be a problem). Any
+    id that does not fit in a [`i64`] will produce an error.
+
+    [`serde_as`]: serde_with::serde_as
+*/
 #[derive(Debug)]
 pub struct IdAsI64;
 
@@ -59,12 +60,14 @@ impl<T> SerializeAs<Id<T>> for IdAsI64 {
     }
 }
 
-/// Serialize twilight [`Id`] as [`u64`].
-///
-/// This type implement [`SerializeAs`] and [`DeserializeAs`] and should be
-/// used with the [`serde_as`] macro.
-///
-/// [`serde_as`]: serde_with::serde_as
+/*
+    Serialize twilight [`Id`] as [`u64`].
+
+    This type implement [`SerializeAs`] and [`DeserializeAs`] and should be
+    used with the [`serde_as`] macro.
+
+    [`serde_as`]: serde_with::serde_as
+*/
 #[derive(Debug)]
 pub struct IdAsU64;
 
@@ -88,14 +91,16 @@ impl<T> SerializeAs<Id<T>> for IdAsU64 {
     }
 }
 
-/// Serialize twilight [`Timestamp`] as [`i64`].
-///
-/// The default implementation serializes timestamps as ISO 8601 datetime.
-///
-/// This type implement [`SerializeAs`] and [`DeserializeAs`] and should be
-/// used with the [`serde_as`] macro.
-///
-/// [`serde_as`]: serde_with::serde_as
+/*
+    This type serializes timestamps as [`i64`] representing the number of
+    microseconds since the UNIX epoch (January 1, 1970). This is useful for
+    compatibility with databases that do not support storing timestamps as
+    native types.
+
+    The maximum timestamp that can be stored is Sep 06 2084, which should not
+    be a problem for most applications. Any timestamp that does not fit in an
+    [`i64`] will produce an error.
+*/
 #[derive(Debug)]
 pub struct TimestampAsI64;
 
@@ -119,12 +124,8 @@ impl SerializeAs<Timestamp> for TimestampAsI64 {
     }
 }
 
-/// Serialize [`OffsetDateTime`] as a UNIX timestamp ([`i64`]).
-///
-/// This type implement [`SerializeAs`] and [`DeserializeAs`] and should be
-/// used with the [`serde_as`] macro.
-///
-/// [`serde_as`]: serde_with::serde_as
+/// !Serialize and deserialize [`OffsetDateTime`] as an [`i64`]
+/// representing the number of seconds since the UNIX epoch (January 1, 1970).
 pub struct DateTimeAsI64;
 
 impl<'de> DeserializeAs<'de, OffsetDateTime> for DateTimeAsI64 {

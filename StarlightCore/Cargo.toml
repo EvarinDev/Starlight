@@ -3,9 +3,10 @@ name = "StarlightCore"
 version = "0.1.0"
 edition = "2024"
 
+
 [dependencies]
 # API 
-StarlightAPI = { path = "../StarlightAPI" }
+starlight_api = { path = "../StarlightAPI" }
 # Asynchronous runtime
 async-trait = "0.1.58"
 futures-util = { version = "0.3.25", default-features = false }

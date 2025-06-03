@@ -20,9 +20,8 @@ use twilight_model::{
 };
 
 use starlight::{
-    cache::{discord::http::CacheHttp, CacheClient},
+    cache::{CacheClient, discord::http::CacheHttp},
     config::BotConfig,
-    database::DbClient,
 };
 
 use crate::{
@@ -79,20 +78,7 @@ impl ShardCluster {
         let redis = CacheClient::connect(&config.database.redis_uri).await?;
         redis.ping().await.context("failed to connect to redis")?;
 
-        let mongodb = DbClient::connect(
-            &config.database.mongodb_uri,
-            config.database.mongodb_database,
-        )
-        .await?;
-        mongodb
-            .ping()
-            .await
-            .context("failed to connect to mongodb")?;
-
-        let intents = Intents::GUILDS
-            | Intents::GUILD_MEMBERS
-            | Intents::GUILD_MESSAGES
-            | Intents::MESSAGE_CONTENT;
+        let intents = Intents::GUILDS | Intents::GUILD_MEMBERS | Intents::GUILD_VOICE_STATES;
 
         let (cluster, events) = Cluster::builder(config.token, intents)
             .http_client(http.clone())
@@ -101,11 +87,8 @@ impl ShardCluster {
             .await?;
 
         info!("started cluster with {} shards", cluster.shards().len());
-
         let state = ClusterState::new(redis, mongodb, http, current_user);
-
         register_commands(&state, application.id).await;
-
         Ok(Self {
             cluster: Arc::new(cluster),
             events,
@@ -113,9 +96,11 @@ impl ShardCluster {
         })
     }
 
-    /// Start the cluster and handle incoming events.
-    ///
-    /// A [`ShutdownSubscriber`] must be provided to gracefully stop the cluster.
+    /*
+       Start the cluster and handle incoming events.
+       This function spawns a task to bring the cluster up and listens for
+       A [`ShutdownSubscriber`] to gracefully shut down the cluster.
+    */
     #[instrument(name = "start_cluster", skip_all)]
     pub async fn start(mut self, mut shutdown: ShutdownSubscriber) {
         // Start the cluster
@@ -171,21 +156,14 @@ fn presence() -> UpdatePresencePayload {
 #[derive(Debug, Clone)]
 pub struct ClusterState {
     pub cache: CacheClient,
-    pub database: DbClient,
     pub http: Arc<HttpClient>,
     pub current_user: Id<ApplicationMarker>,
 }
 
 impl ClusterState {
     /// Initialize a new [`ClusterState`].
-    pub fn new(
-        http: Arc<HttpClient>,
-        current_user: Id<ApplicationMarker>,
-    ) -> Self {
-        Self {
-            http,
-            current_user,
-        }
+    pub fn new(http: Arc<HttpClient>, current_user: Id<ApplicationMarker>) -> Self {
+        Self { http, current_user }
     }
 
     /// Get the [`CacheHttp`] client associated with the cache client.
