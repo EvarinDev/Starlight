@@ -10,8 +10,8 @@ At **Starlight Dev**, we are committed to protecting user privacy. This privacy 
 ## 2. How We Use Your Information
 
 2.1. **Bot Improvement**: We use the collected data to improve the features and performance of the Discord bot, such as optimizing bot usage and enhancing user experience.
-2.3. **Legal Compliance**: We may use collected information to comply with relevant laws, regulations, and legal requests.  
-2.4. **AI Chat Functionality**: We use the content of your messages in AI Chat to generate appropriate responses and improve the AI's understanding and performance.
+2.2. **Legal Compliance**: We may use collected information to comply with relevant laws, regulations, and legal requests.  
+2.3. **AI Chat Functionality**: We use the content of your messages in AI Chat to generate appropriate responses and improve the AI's understanding and performance.
 
 ## 3. Data Retention and Security
 
