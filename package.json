@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
-    "@slipher/redis-adapter": "^0.0.4",
+    "@slipher/redis-adapter": "^0.0.6",
     "ansi-colors": "^4.1.3",
     "common-tags": "^1.8.2",
     "discord-api-types": "^0.38.8",
