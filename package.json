@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@dep-tree/cli": "^0.23.4",
-    "@eslint/js": "^9.27.0",
+    "@eslint/js": "^10.0.1",
     "@types/bun": "latest",
     "@types/common-tags": "^1.8.4",
     "@types/ws": "^8.18.1",
