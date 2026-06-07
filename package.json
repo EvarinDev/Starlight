@@ -19,7 +19,7 @@
     "@types/bun": "latest",
     "@types/common-tags": "^1.8.4",
     "@types/ws": "^8.18.1",
-    "eslint": "^9.27.0",
+    "eslint": "^10.4.1",
     "globals": "^17.3.0",
     "typescript-eslint": "^8.32.1"
   },
