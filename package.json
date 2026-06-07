@@ -27,7 +27,7 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@prisma/client": "^6.8.2",
+    "@prisma/client": "^7.8.0",
     "@slipher/redis-adapter": "^0.0.6",
     "ansi-colors": "^4.1.3",
     "common-tags": "^1.8.2",
